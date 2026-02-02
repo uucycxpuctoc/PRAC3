@@ -1,224 +1,161 @@
 :root {
-    --bg: #0b0e14;
-    --card: #161b22;
-    --primary: #7c3aed;
-    --accent: #3b82f6;
-    --text: #e6edf3;
-    --text-dim: #8b949e;
+    --primary: #6366f1;
+    --bg: #0f172a;
+    --glass: rgba(255, 255, 255, 0.05);
+    --text: #f8fafc;
 }
 
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--bg);
-    color: var(--text);
     margin: 0;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
 }
 
 /* Навигация */
 .navbar {
-    background: rgba(22, 27, 34, 0.9);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid #30363d;
-    padding: 10px 0;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.nav-container {
-    max-width: 1000px;
-    margin: 0 auto;
+    width: 100%;
+    padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--glass);
+    box-sizing: border-box;
 }
 
-.logo { 
-    font-weight: 800; 
-    font-size: 1.8rem; 
-    background: linear-gradient(45deg, var(--primary), var(--accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
+.logo { font-size: 1.5rem; font-weight: bold; }
+.logo span { color: var(--primary); }
 
-.dropbtn {
+.menu-trigger {
     background: var(--primary);
     color: white;
     border: none;
-    padding: 8px 20px;
+    padding: 8px 16px;
     border-radius: 8px;
     cursor: pointer;
-    font-weight: 600;
+    transition: 0.3s;
 }
 
-.dropdown-content {
-    display: none;
+.dropdown-menu {
     position: absolute;
-    right: 0;
-    background: var(--card);
-    min-width: 180px;
-    border: 1px solid #30363d;
-    border-radius: 10px;
-    margin-top: 10px;
+    top: 60px; right: 20px;
+    background: #1e293b;
+    border-radius: 12px;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
     box-shadow: 0 10px 25px rgba(0,0,0,0.5);
 }
 
-.dropdown-content.show { display: block; }
+.dropdown-menu.show { display: flex; }
 
-.dropdown-content a {
+.dropdown-menu button {
+    background: none;
+    border: none;
+    padding: 12px 24px;
     color: white;
-    padding: 12px;
-    text-decoration: none;
-    display: block;
+    text-align: left;
+    cursor: pointer;
 }
 
-.dropdown-content a:hover {
-    background: #21262d;
-    color: var(--primary);
-}
+.dropdown-menu button:hover { background: var(--primary); }
 
-/* Карточки игр */
+/* Контейнер игры */
+.container { margin-top: 40px; width: 100%; max-width: 600px; padding: 20px; }
+
 .game-card {
     display: none;
-    background: var(--card);
-    padding: 30px;
+    background: var(--glass);
+    padding: 2rem;
     border-radius: 24px;
-    border: 1px solid #30363d;
-    width: 100%;
-    max-width: 400px;
-    margin: 40px auto;
+    border: 1px solid var(--glass);
     text-align: center;
-    animation: fadeIn 0.3s ease;
+    animation: fadeIn 0.5s ease;
 }
 
 .game-card.active { display: block; }
+
+.stats {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: #94a3b8;
+}
+
+/* Сетки игр */
+.game-field {
+    height: 300px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+}
+
+.target {
+    width: 60px; height: 60px;
+    background: var(--primary);
+    border: none;
+    border-radius: 50%;
+    position: absolute;
+    cursor: pointer;
+    box-shadow: 0 0 20px var(--primary);
+    transition: transform 0.1s;
+}
+
+.ttt-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.cell {
+    aspect-ratio: 1;
+    background: var(--glass);
+    border-radius: 12px;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.maze-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 2px;
+    background: #1e293b;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+.maze-cell { width: 100%; aspect-ratio: 1; border-radius: 2px; }
+.wall { background: #475569; }
+.player { background: var(--primary); border-radius: 50%; transform: scale(0.8); box-shadow: 0 0 10px var(--primary); }
+.exit { background: #10b981; }
+
+.play-btn {
+    margin-top: 120px;
+    padding: 12px 32px;
+    border-radius: 30px;
+    background: var(--primary);
+    border: none;
+    color: white;
+    cursor: pointer;
+}
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
-
-.badge {
-    background: rgba(124, 58, 237, 0.1);
-    color: var(--primary);
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-bottom: 15px;
-    display: inline-block;
-}
-
-/* Статистика */
-.stats-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-.stat-card {
-    background: #0d1117;
-    padding: 15px;
-    border-radius: 12px;
-    border: 1px solid #30363d;
-}
-
-.stat-card strong {
-    color: var(--primary);
-    font-size: 1.5rem;
-    display: block;
-}
-
-/* Кнопки */
-.btn-main {
-    background: linear-gradient(135deg, var(--primary), var(--accent));
-    color: white;
-    border: none;
-    padding: 15px;
-    border-radius: 12px;
-    width: 100%;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
-}
-
-.btn-reset {
-    background: none;
-    border: 1px solid #30363d;
-    color: var(--text-dim);
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 15px;
-}
-
-/* Игра на Реакцию */
-.game-field {
-    background: #0d1117;
-    height: 250px;
-    border-radius: 15px;
-    position: relative;
-    border: 1px solid #30363d;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.target-btn {
-    position: absolute;
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 50px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 0 15px var(--primary);
-    z-index: 10;
-}
-
-/* Крестики-нолики */
-.ttt-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    width: 260px;
-    margin: 20px auto;
-}
-
-.cell {
-    background: #0d1117;
-    height: 80px;
-    border: 1px solid #30363d;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    font-weight: 800;
-    cursor: pointer;
-}
-
-.cell.x { color: var(--primary); }
-.cell.o { color: var(--accent); }
-
-/* Лабиринт */
-.maze-grid {
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    gap: 2px;
-    width: 300px;
-    margin: 20px auto;
-    background: #30363d;
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-.maze-cell { width: 30px; height: 30px; background: var(--card); }
-.wall { background: #000; }
-.player { background: var(--primary); border-radius: 50%; box-shadow: 0 0 10px var(--primary); }
-.exit { background: #10b981; }
-.hint { font-size: 0.8rem; color: var(--text-dim); }
