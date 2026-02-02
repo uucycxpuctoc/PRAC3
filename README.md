@@ -1,5 +1,8 @@
 # Практическая работа №3
 ## Разработка интерактивных мини-игр
+## Демо
+https://github.com/uucycxpuctoc/PRAC3
+<img width="1913" height="920" alt="изображение" src="https://github.com/user-attachments/assets/cafdd3eb-c64c-4bcc-8e70-b2314a4e0b99" />
 
 ### Реализованные игры:
 1. Игра на скорость реакции  
@@ -25,3 +28,4 @@
 
 # Автор
 - Дышленко Александр
+- CS-306
