@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Лабиринт</title>
+<style>
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 50px);
+  gap: 2px;
+}
+.cell {
+  width: 50px;
+  height: 50px;
+  background: #ddd;
+}
+.wall { background: #333; }
+.player { background: blue; }
+.exit { background: green; }
+</style>
+</head>
+<body>
+
+<h2>Лабиринт</h2>
+<div class="grid" id="grid"></div>
+<p id="msg"></p>
+<button onclick="reset()">Перезапуск</button>
+
+<script>
+const map = [
+  "#####",
+  "#P  #",
+  "# # #",
+  "#  E#",
+  "#####"
+];
+
+let player = {x:1, y:1};
+let startTime = Date.now();
+
+const grid = document.getElementById("grid");
+const msg = document.getElementById("msg");
+
+function draw() {
+  grid.innerHTML = "";
+  map.forEach((row,y)=>{
+    [...row].forEach((cell,x)=>{
+      let d = document.createElement("div");
+      d.className = "cell";
+      if (cell === "#") d.classList.add("wall");
+      if (x===player.x && y===player.y) d.classList.add("player");
+      if (cell === "E") d.classList.add("exit");
+      grid.appendChild(d);
+    });
+  });
+}
+
+document.addEventListener("keydown", e => {
+  let dx=0, dy=0;
+  if (e.key==="ArrowUp") dy=-1;
+  if (e.key==="ArrowDown") dy=1;
+  if (e.key==="ArrowLeft") dx=-1;
+  if (e.key==="ArrowRight") dx=1;
+
+  let nx = player.x + dx;
+  let ny = player.y + dy;
+
+  if (map[ny][nx] !== "#") {
+    player.x = nx;
+    player.y = ny;
+    if (map[ny][nx] === "E") {
+      let t = Math.round((Date.now()-startTime)/1000);
+      msg.textContent = `Вы победили за ${t} секунд`;
+    }
+    draw();
+  }
+});
+
+function reset() {
+  location.reload();
+}
+
+draw();
+</script>
+
+</body>
+</html>
