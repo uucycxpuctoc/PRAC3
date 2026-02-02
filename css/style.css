@@ -1,8 +1,9 @@
 :root {
     --bg: #0b0e14;
     --card: #161b22;
-    --primary: #f97316;         /* Оранжевый */
-    --primary-glow: rgba(249, 115, 22, 0.3);
+    --primary: #f97316;
+    --primary-dark: #c2410c;
+    --accent: #fbbf24;
     --text: #e6edf3;
     --text-dim: #8b949e;
     --stat-bg: #0d1117;
@@ -13,16 +14,15 @@ body {
     background-color: var(--bg);
     color: var(--text);
     margin: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    overflow-x: hidden;
 }
 
 /* Навигация */
 .navbar {
-    background: #161b22;
+    background: rgba(22, 27, 34, 0.95);
+    backdrop-filter: blur(12px);
     border-bottom: 1px solid #30363d;
-    padding: 1rem 0;
+    padding: 0.8rem 0;
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -40,123 +40,130 @@ body {
 .logo { 
     font-weight: 800; 
     font-size: 2rem; 
-    color: var(--primary);
-    text-shadow: 0 0 10px var(--primary-glow);
+    background: linear-gradient(45deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
+/* Красивая кнопка меню */
 .dropbtn {
-    background: var(--primary);
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     color: white;
-    padding: 10px 20px;
+    padding: 10px 22px;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
     font-weight: 600;
-}
-
-/* ВАЖНО: Прячем неактивные игры */
-.game-card {
-    display: none; /* Это уберет кашу со страницы */
-    background: var(--card);
-    padding: 40px;
-    border-radius: 24px;
-    border: 1px solid #30363d;
-    width: 100%;
-    max-width: 450px;
-    margin: 40px auto;
-    text-align: center;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-}
-
-.game-card.active {
-    display: block; /* Показываем только выбранную */
-}
-
-/* Сетки для игр */
-.stats-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-.stat-card {
-    background: var(--stat-bg);
-    padding: 15px;
-    border-radius: 12px;
-    border: 1px solid #30363d;
-}
-
-.stat-card strong {
-    color: var(--primary);
-    font-size: 1.5rem;
-    display: block;
-}
-
-/* Кнопки */
-.btn-main {
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 12px;
-    font-weight: 700;
-    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(249, 115, 22, 0.2);
     transition: 0.3s;
 }
 
-.btn-main:hover {
-    filter: brightness(1.2);
-    box-shadow: 0 0 20px var(--primary-glow);
+.dropdown-content {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-15px);
+    position: absolute;
+    right: 0;
+    background: var(--card);
+    min-width: 200px;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    margin-top: 12px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    transition: 0.3s ease;
 }
+
+.dropdown-content.show { opacity: 1; visibility: visible; transform: translateY(0); }
+
+.dropdown-content a {
+    color: var(--text);
+    padding: 14px 20px;
+    text-decoration: none;
+    display: block;
+    transition: 0.2s;
+}
+
+.dropdown-content a:hover { background: #21262d; color: var(--primary); padding-left: 25px; }
+
+/* Карточки */
+.content { display: flex; justify-content: center; padding: 40px 20px; }
+
+.game-card {
+    background: var(--card);
+    padding: 35px;
+    border-radius: 28px;
+    border: 1px solid #30363d;
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    display: none;
+}
+
+.game-card.active { display: block; animation: slideUp 0.5s ease; }
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Кнопки "AD Style" */
+.btn-main {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 14px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    cursor: pointer;
+    width: 100%;
+    margin: 15px 0;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 5px 15px rgba(249, 115, 22, 0.3);
+}
+
+.btn-main:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(249, 115, 22, 0.5); }
+.btn-main:active { transform: scale(0.97); }
 
 .btn-reset {
     background: transparent;
     border: 1px solid #30363d;
     color: var(--text-dim);
-    margin-top: 20px;
-    padding: 8px 16px;
-    border-radius: 8px;
+    padding: 10px 20px;
+    border-radius: 10px;
     cursor: pointer;
+    transition: 0.2s;
 }
 
-/* Крестики-нолики */
-.ttt-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin: 20px auto;
-    width: 240px;
-}
+.btn-reset:hover { border-color: var(--primary); color: var(--primary); }
 
-.cell {
-    width: 70px;
-    height: 70px;
-    background: var(--stat-bg);
-    border: 1px solid #30363d;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    font-weight: bold;
+/* Игровые элементы */
+.game-field { background: var(--stat-bg); height: 250px; border-radius: 18px; position: relative; border: 1px solid #30363d; display: flex; align-items: center; justify-content: center; margin: 15px 0; }
+
+.target-btn {
+    position: absolute;
+    background: radial-gradient(circle, var(--accent), var(--primary));
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-weight: 900;
     cursor: pointer;
+    box-shadow: 0 0 20px rgba(249, 115, 22, 0.5);
 }
 
+.ttt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 20px auto; width: 260px; }
+.cell { background: var(--stat-bg); height: 80px; border: 1px solid #30363d; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; cursor: pointer; transition: 0.2s; }
 .cell.x { color: var(--primary); }
-.cell.o { color: #3b82f6; } /* Оставим нолики синими для контраста */
+.cell.o { color: #3b82f6; }
 
-/* Лабиринт */
-.maze-grid {
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    gap: 2px;
-    width: 300px;
-    margin: 20px auto;
-    background: #30363d;
-}
-
+.maze-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 2px; width: 300px; margin: 20px auto; background: #30363d; border-radius: 5px; overflow: hidden; }
 .maze-cell { width: 30px; height: 30px; background: var(--card); }
 .wall { background: #0b0e14; }
-.player { background: var(--primary); border-radius: 50%; }
+.player { background: var(--primary); border-radius: 50%; box-shadow: 0 0 10px var(--primary); }
 .exit { background: #10b981; }
+
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+.stat-card { background: var(--stat-bg); padding: 12px; border-radius: 15px; border: 1px solid #30363d; }
+.stat-card strong { color: var(--primary); font-size: 1.6rem; display: block; }
+.badge { background: rgba(249, 115, 22, 0.1); color: var(--primary); padding: 4px 12px; border-radius: 100px; font-size: 0.7rem; font-weight: 700; margin-bottom: 10px; display: inline-block; border: 1px solid rgba(249, 115, 22, 0.2); }
