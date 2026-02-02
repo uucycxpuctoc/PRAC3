@@ -29,6 +29,14 @@ body {
 .player { background: #fff; }
 .exit { background: #777; }
 
+#win {
+  display: none;
+  font-size: 22px;
+  margin-top: 15px;
+  border: 2px solid #fff;
+  padding: 10px;
+}
+
 button {
   background: #000;
   color: #fff;
@@ -46,8 +54,12 @@ button:hover {
 <body>
 
 <h2>Лабиринт</h2>
+<p>Управление: стрелки клавиатуры</p>
+
 <div class="grid" id="grid"></div>
-<p id="msg"></p>
+
+<div id="win"></div>
+
 <button onclick="reset()">Перезапуск</button>
 
 <script>
@@ -61,9 +73,10 @@ const map = [
 
 let player = {x:1, y:1};
 let startTime = Date.now();
+let finished = false;
 
 const grid = document.getElementById("grid");
-const msg = document.getElementById("msg");
+const win = document.getElementById("win");
 
 function draw() {
   grid.innerHTML = "";
@@ -80,6 +93,8 @@ function draw() {
 }
 
 document.addEventListener("keydown", e => {
+  if (finished) return;
+
   let dx=0, dy=0;
   if (e.key==="ArrowUp") dy=-1;
   if (e.key==="ArrowDown") dy=1;
@@ -92,9 +107,12 @@ document.addEventListener("keydown", e => {
   if (map[ny][nx] !== "#") {
     player.x = nx;
     player.y = ny;
+
     if (map[ny][nx] === "E") {
-      let t = Math.round((Date.now()-startTime)/1000);
-      msg.textContent = `Вы прошли лабиринт за ${t} секунд`;
+      finished = true;
+      let time = Math.round((Date.now() - startTime) / 1000);
+      win.style.display = "block";
+      win.textContent = `🎉 Победа! Вы прошли лабиринт за ${time} секунд`;
     }
     draw();
   }
