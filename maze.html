@@ -4,19 +4,43 @@
 <meta charset="UTF-8">
 <title>Лабиринт</title>
 <style>
+body {
+  background: #000;
+  color: #fff;
+  font-family: Arial;
+  text-align: center;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(5, 50px);
   gap: 2px;
+  justify-content: center;
+  margin: 20px auto;
 }
+
 .cell {
   width: 50px;
   height: 50px;
-  background: #ddd;
+  background: #111;
 }
-.wall { background: #333; }
-.player { background: blue; }
-.exit { background: green; }
+
+.wall { background: #000; border: 1px solid #444; }
+.player { background: #fff; }
+.exit { background: #777; }
+
+button {
+  background: #000;
+  color: #fff;
+  border: 2px solid #fff;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #fff;
+  color: #000;
+}
 </style>
 </head>
 <body>
@@ -70,7 +94,7 @@ document.addEventListener("keydown", e => {
     player.y = ny;
     if (map[ny][nx] === "E") {
       let t = Math.round((Date.now()-startTime)/1000);
-      msg.textContent = `Вы победили за ${t} секунд`;
+      msg.textContent = `Вы прошли лабиринт за ${t} секунд`;
     }
     draw();
   }
