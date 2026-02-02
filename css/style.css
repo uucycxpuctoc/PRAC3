@@ -1,9 +1,8 @@
 :root {
     --bg: #0b0e14;
     --card: #161b22;
-    --primary: #ff6a00;         /* Тот самый ярко-оранжевый */
-    --primary-dark: #cc5500;    /* Темно-оранжевый */
-    --accent: #ffae00;         /* Золотисто-оранжевый */
+    --primary: #f97316;         /* Оранжевый */
+    --primary-glow: rgba(249, 115, 22, 0.3);
     --text: #e6edf3;
     --text-dim: #8b949e;
     --stat-bg: #0d1117;
@@ -11,17 +10,19 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--bg) !important; /* Принудительно темный */
+    background-color: var(--bg);
     color: var(--text);
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /* Навигация */
 .navbar {
-    background: rgba(22, 27, 34, 0.95);
-    backdrop-filter: blur(12px);
-    border-bottom: 2px solid var(--primary-dark);
-    padding: 0.8rem 0;
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+    padding: 1rem 0;
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -37,74 +38,125 @@ body {
 }
 
 .logo { 
-    font-weight: 900; 
-    font-size: 2.2rem; 
-    color: var(--primary) !important;
-    text-shadow: 0 0 15px rgba(255, 106, 0, 0.4);
+    font-weight: 800; 
+    font-size: 2rem; 
+    color: var(--primary);
+    text-shadow: 0 0 10px var(--primary-glow);
 }
 
-/* Кнопка меню */
 .dropbtn {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
-    color: white !important;
-    padding: 10px 22px;
+    background: var(--primary);
+    color: white;
+    padding: 10px 20px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    font-weight: 700;
+    font-weight: 600;
 }
 
-.dropdown-content {
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-15px);
-    position: absolute;
-    right: 0;
+/* ВАЖНО: Прячем неактивные игры */
+.game-card {
+    display: none; /* Это уберет кашу со страницы */
     background: var(--card);
-    min-width: 200px;
-    border: 1px solid var(--primary-dark);
+    padding: 40px;
+    border-radius: 24px;
+    border: 1px solid #30363d;
+    width: 100%;
+    max-width: 450px;
+    margin: 40px auto;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.game-card.active {
+    display: block; /* Показываем только выбранную */
+}
+
+/* Сетки для игр */
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background: var(--stat-bg);
+    padding: 15px;
     border-radius: 12px;
-    margin-top: 12px;
+    border: 1px solid #30363d;
+}
+
+.stat-card strong {
+    color: var(--primary);
+    font-size: 1.5rem;
+    display: block;
+}
+
+/* Кнопки */
+.btn-main {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
     transition: 0.3s;
 }
 
-.dropdown-content.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+.btn-main:hover {
+    filter: brightness(1.2);
+    box-shadow: 0 0 20px var(--primary-glow);
 }
 
-.dropdown-content a:hover {
-    background: var(--primary-dark);
-    color: white !important;
-}
-
-/* Игровые карточки */
-.game-card {
-    background: var(--card) !important;
+.btn-reset {
+    background: transparent;
     border: 1px solid #30363d;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(255, 106, 0, 0.05);
+    color: var(--text-dim);
+    margin-top: 20px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
 }
 
-.badge {
-    background: rgba(255, 106, 0, 0.2) !important;
-    color: var(--primary) !important;
-    border: 1px solid var(--primary-dark);
+/* Крестики-нолики */
+.ttt-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 20px auto;
+    width: 240px;
 }
 
-.btn-main {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
-    color: white !important;
-    box-shadow: 0 5px 15px rgba(255, 106, 0, 0.3);
+.cell {
+    width: 70px;
+    height: 70px;
+    background: var(--stat-bg);
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-/* Статы */
-.stat-card strong {
-    color: var(--primary) !important;
+.cell.x { color: var(--primary); }
+.cell.o { color: #3b82f6; } /* Оставим нолики синими для контраста */
+
+/* Лабиринт */
+.maze-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 2px;
+    width: 300px;
+    margin: 20px auto;
+    background: #30363d;
 }
 
-/* Специфичные элементы игр */
-.target-btn { background: var(--primary) !important; }
-.cell.x { color: var(--primary) !important; }
-.cell.o { color: var(--accent) !important; }
-.player { background: var(--primary) !important; box-shadow: 0 0 15px var(--primary); }
+.maze-cell { width: 30px; height: 30px; background: var(--card); }
+.wall { background: #0b0e14; }
+.player { background: var(--primary); border-radius: 50%; }
+.exit { background: #10b981; }
