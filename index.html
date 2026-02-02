@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AD | Interactive Games</title>
+    <title>AD | Практическая работа №3</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=classic">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -42,8 +42,8 @@
             <div class="badge">Задание 2</div>
             <h2>❌ Крестики-нолики</h2>
             <div class="stats-grid">
-                <div class="stat-card"><span>X</span><strong id="win-x">0</strong></div>
-                <div class="stat-card"><span>O</span><strong id="win-o">0</strong></div>
+                <div class="stat-card"><span>X Побед</span><strong id="win-x">0</strong></div>
+                <div class="stat-card"><span>O Побед</span><strong id="win-o">0</strong></div>
             </div>
             <div id="ttt-board" class="ttt-grid">
                 <div class="cell" data-index="0"></div><div class="cell" data-index="1"></div><div class="cell" data-index="2"></div>
@@ -51,7 +51,7 @@
                 <div class="cell" data-index="6"></div><div class="cell" data-index="7"></div><div class="cell" data-index="8"></div>
             </div>
             <p id="ttt-status">Ход: X</p>
-            <button class="btn-reset" onclick="resetTTT()">Заново</button>
+            <button class="btn-reset" onclick="resetTTT()">Перезапуск</button>
         </section>
 
         <section id="maze" class="game-card">
@@ -61,6 +61,7 @@
                 <div class="stat-card"><span>Таймер</span><strong id="maze-timer">0</strong></div>
             </div>
             <div id="maze-container" class="maze-grid"></div>
+            <p class="hint">Используй стрелочки на клавиатуре</p>
             <button class="btn-reset" onclick="initMaze()">Сброс</button>
         </section>
     </main>
