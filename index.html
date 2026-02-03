@@ -3,43 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AD | PR3 Interactive Games</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <title>Interactive Mini-Games | PR3</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">AD GAMES</div>
-            <div class="menu">
-                <button onclick="selectGame('reaction')">⚡ Реакция</button>
-                <button onclick="selectGame('tictactoe')">❌ Крестики</button>
-                <button onclick="selectGame('maze')">🧩 Лабиринт</button>
-            </div>
+    <div class="background-blobs"></div>
+    
+    <nav class="glass-nav">
+        <h1>GAME<span>HUB</span></h1>
+        <div class="nav-links">
+            <button onclick="switchGame('reaction')">⚡ Реакция</button>
+            <button onclick="switchGame('tictactoe')">❌ Крестики</button>
+            <button onclick="switchGame('maze')">🧩 Лабиринт</button>
         </div>
     </nav>
 
-    <main class="content">
+    <main class="container">
         <section id="reaction" class="game-card active">
-            <div class="badge">Задание 1</div>
-            <h2>Скорость реакции</h2>
-            <div class="stats-grid">
-                <div class="stat-card"><span>Клики:</span> <strong id="react-clicks">0</strong></div>
-                <div class="stat-card"><span>Время:</span> <strong id="react-timer">30</strong>с</div>
+            <div class="game-header">
+                <span class="badge">Задание 1</span>
+                <h2>Скорость реакции</h2>
             </div>
-            <div id="reaction-area" class="game-field">
-                <div id="start-msg">Нажми "Старт", чтобы начать</div>
-                <button id="target-btn" class="target-btn" style="display: none;">КЛИК!</button>
+            <div class="stats">
+                <div class="stat-box">Клики: <span id="react-score">0</span></div>
+                <div class="stat-box">Время: <span id="react-timer">30</span>с</div>
             </div>
-            <button class="btn-main" id="react-start" onclick="startReactionGame()">Старт</button>
+            <div id="reaction-field" class="play-area">
+                <div id="react-start-screen">
+                    <button class="btn-primary" onclick="startReactionGame()">Начать игру</button>
+                </div>
+                <button id="target" class="target-btn">КЛИК!</button>
+            </div>
         </section>
 
         <section id="tictactoe" class="game-card">
-            <div class="badge">Задание 2</div>
-            <h2>Крестики-нолики</h2>
-            <div class="stats-grid">
-                <div class="stat-card"><span>X:</span> <strong id="win-x">0</strong></div>
-                <div class="stat-card"><span>O:</span> <strong id="win-o">0</strong></div>
+            <div class="game-header">
+                <span class="badge">Задание 2</span>
+                <h2>Крестики-нолики</h2>
+            </div>
+            <div class="stats">
+                <div class="stat-box">X: <span id="wins-x">0</span></div>
+                <div class="stat-box">O: <span id="wins-o">0</span></div>
             </div>
             <div id="ttt-board" class="ttt-grid">
                 <div class="cell" data-index="0"></div>
@@ -52,22 +57,28 @@
                 <div class="cell" data-index="7"></div>
                 <div class="cell" data-index="8"></div>
             </div>
-            <p id="ttt-status">Ход: X</p>
-            <button class="btn-reset" onclick="resetTTT()">Заново</button>
+            <div class="controls">
+                <p id="ttt-status">Ход: X</p>
+                <button class="btn-secondary" onclick="resetTTT()">Перезапуск</button>
+            </div>
         </section>
 
         <section id="maze" class="game-card">
-            <div class="badge">Задание 3</div>
-            <h2>Лабиринт</h2>
-            <div class="stats-grid">
-                <div class="stat-card"><span>Таймер:</span> <strong id="maze-timer">0</strong>с</div>
+            <div class="game-header">
+                <span class="badge">Задание 3</span>
+                <h2>Лабиринт</h2>
             </div>
-            <div id="maze-container" class="maze-grid"></div>
-            <p id="maze-msg">Управление стрелками клавиатуры</p>
-            <button class="btn-reset" onclick="initMaze()">Сброс</button>
+            <div class="stats">
+                <div class="stat-box">Таймер: <span id="maze-timer">0</span>с</div>
+            </div>
+            <div id="maze-container" class="maze-wrapper"></div>
+            <div class="controls">
+                <p>Используйте стрелки ⌨️</p>
+                <button class="btn-secondary" onclick="initMaze()">Сброс</button>
+            </div>
         </section>
     </main>
 
-    <script src="js/script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
