@@ -3,313 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GAMEHUB | Практическая №3</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #00f2fe;
-            --secondary: #4facfe;
-            --bg: #0b0e14;
-            --glass: rgba(255, 255, 255, 0.05);
-            --border: rgba(255, 255, 255, 0.1);
-        }
-
-        body {
-            margin: 0;
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg);
-            background: radial-gradient(circle at top right, #1e293b, #0f172a);
-            color: white;
-            min-height: 100vh;
-        }
-
-        /* Навигация */
-        .glass-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 5%;
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo { font-weight: 900; letter-spacing: -1px; }
-        .logo span { color: var(--primary); }
-
-        .nav-links button {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            color: white;
-            padding: 8px 15px;
-            margin-left: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .nav-links button:hover { background: var(--primary); color: #000; }
-
-        /* Контент */
-        .container { padding: 40px 20px; display: flex; justify-content: center; }
-
-        .game-card {
-            display: none; /* По умолчанию скрыты */
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            padding: 30px;
-            border-radius: 24px;
-            width: 100%;
-            max-width: 600px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-
-        .game-card.active { display: block; animation: fadeIn 0.4s ease; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .badge { background: var(--primary); color: #000; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; }
-
-        .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0; }
-        .stat-box { background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; text-align: center; border: 1px solid var(--border); }
-        .stat-box span { display: block; font-size: 24px; font-weight: 900; color: var(--primary); }
-
-        /* Реакция */
-        .play-area { height: 300px; background: rgba(0,0,0,0.4); border-radius: 16px; position: relative; overflow: hidden; border: 1px dashed var(--border); }
-        .target-btn { position: absolute; display: none; padding: 12px 24px; background: var(--primary); border: none; border-radius: 12px; color: #000; font-weight: 900; cursor: pointer; box-shadow: 0 0 20px rgba(0,242,254,0.5); z-index: 10; }
-        #react-start-screen { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.6); z-index: 20; }
-
-        /* Крестики-нолики */
-        .ttt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 20px 0; }
-        .cell { aspect-ratio: 1; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: 900; cursor: pointer; transition: 0.2s; }
-        .cell:hover { background: rgba(255,255,255,0.1); }
-
-        /* Лабиринт */
-        .maze-wrapper { display: grid; gap: 2px; margin: 20px auto; width: fit-content; border: 2px solid var(--border); padding: 2px; background: var(--border); }
-        .m-cell { width: 30px; height: 30px; }
-        .m-wall { background: #1e293b; }
-        .m-path { background: #0f172a; }
-        .m-player { background: var(--primary); border-radius: 50%; box-shadow: 0 0 15px var(--primary); }
-        .m-exit { background: #22c55e; box-shadow: 0 0 15px #22c55e; }
-
-        /* Кнопки */
-        .btn-primary { background: var(--primary); color: #000; border: none; padding: 12px 24px; border-radius: 10px; font-weight: 700; cursor: pointer; }
-        .btn-secondary { background: transparent; border: 1px solid var(--border); color: white; padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-top: 10px; }
-    </style>
+    <title>Интерактивные игры | Практическая №3</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav class="glass-nav">
-        <h1 class="logo">GAME<span>HUB</span></h1>
-        <div class="nav-links">
-            <button onclick="switchGame('reaction')">⚡ Реакция</button>
-            <button onclick="switchGame('tictactoe')">❌ Крестики</button>
-            <button onclick="switchGame('maze')">🧩 Лабиринт</button>
-        </div>
+    <nav class="navbar">
+        <button class="nav-btn active" data-game="reaction">⚡ Реакция</button>
+        <button class="nav-btn" data-game="tictactoe">❌ Крестики</button>
+        <button class="nav-btn" data-game="maze">🧩 Лабиринт</button>
     </nav>
 
     <main class="container">
         <section id="reaction" class="game-card active">
-            <span class="badge">Задание 1</span>
             <h2>Скорость реакции</h2>
             <div class="stats">
-                <div class="stat-box">Клики <span id="react-score">0</span></div>
-                <div class="stat-box">Таймер <span id="react-timer">30</span></div>
+                <div class="stat-item">Клики: <span id="r-clicks">0</span></div>
+                <div class="stat-item">Таймер: <span id="r-timer">30</span>с</div>
             </div>
-            <div id="reaction-field" class="play-area">
-                <div id="react-start-screen">
-                    <button class="btn-primary" onclick="startReactionGame()">Начать игру</button>
-                </div>
+            <div id="reaction-field" class="play-field">
                 <button id="target" class="target-btn">КЛИК!</button>
             </div>
+            <button id="start-reaction" class="main-btn">Начать игру</button>
         </section>
 
         <section id="tictactoe" class="game-card">
-            <span class="badge">Задание 2</span>
             <h2>Крестики-нолики</h2>
             <div class="stats">
-                <div class="stat-box">Побед X <span id="wins-x">0</span></div>
-                <div class="stat-box">Побед O <span id="wins-o">0</span></div>
+                <div class="stat-item">Побед X: <span id="win-x">0</span></div>
+                <div class="stat-item">Побед O: <span id="win-o">0</span></div>
             </div>
-            <div id="ttt-board" class="ttt-grid">
-                <div class="cell" data-index="0"></div>
-                <div class="cell" data-index="1"></div>
-                <div class="cell" data-index="2"></div>
-                <div class="cell" data-index="3"></div>
-                <div class="cell" data-index="4"></div>
-                <div class="cell" data-index="5"></div>
-                <div class="cell" data-index="6"></div>
-                <div class="cell" data-index="7"></div>
-                <div class="cell" data-index="8"></div>
-            </div>
+            <div id="ttt-board" class="grid-3x3">
+                </div>
             <p id="ttt-status">Ход: X</p>
-            <button class="btn-secondary" onclick="resetTTT()">Заново</button>
+            <button id="reset-ttt" class="main-btn btn-alt">Заново</button>
         </section>
 
         <section id="maze" class="game-card">
-            <span class="badge">Задание 3</span>
             <h2>Лабиринт</h2>
             <div class="stats">
-                <div class="stat-box">Время <span id="maze-timer">0</span></div>
+                <div class="stat-item">Время: <span id="m-timer">0</span>с</div>
             </div>
-            <div id="maze-container" class="maze-wrapper"></div>
-            <button class="btn-secondary" onclick="initMaze()">Сброс</button>
+            <div id="maze-container" class="maze-grid"></div>
+            <p>Управление: Стрелки клавиатуры</p>
+            <button id="reset-maze" class="main-btn btn-alt">Сброс</button>
         </section>
     </main>
 
-    <script>
-        // Переключение вкладок
-        function switchGame(gameId) {
-            document.querySelectorAll('.game-card').forEach(c => c.classList.remove('active'));
-            document.getElementById(gameId).classList.add('active');
-            if(gameId === 'maze') initMaze();
-        }
-
-        // --- ЛОГИКА: РЕАКЦИЯ ---
-        let reactionActive = false;
-        let reactionTimer = 30;
-        let clicks = 0;
-        let reactionTimes = [];
-        let spawnTime;
-
-        function startReactionGame() {
-            reactionActive = true;
-            clicks = 0;
-            reactionTimes = [];
-            reactionTimer = 30;
-            document.getElementById('react-score').innerText = '0';
-            document.getElementById('react-start-screen').style.display = 'none';
-            
-            let timerId = setInterval(() => {
-                reactionTimer--;
-                document.getElementById('react-timer').innerText = reactionTimer;
-                if(reactionTimer <= 0) {
-                    clearInterval(timerId);
-                    endReaction();
-                }
-            }, 1000);
-            spawnTarget();
-        }
-
-        function spawnTarget() {
-            if(!reactionActive) return;
-            const target = document.getElementById('target');
-            const field = document.getElementById('reaction-field');
-            const x = Math.random() * (field.clientWidth - 100);
-            const y = Math.random() * (field.clientHeight - 60);
-            
-            target.style.left = x + 'px';
-            target.style.top = y + 'px';
-            target.style.display = 'block';
-            spawnTime = Date.now();
-        }
-
-        document.getElementById('target').onclick = () => {
-            reactionTimes.push(Date.now() - spawnTime);
-            clicks++;
-            document.getElementById('react-score').innerText = clicks;
-            document.getElementById('target').style.display = 'none';
-            setTimeout(spawnTarget, Math.random() * 2000 + 500);
-        };
-
-        function endReaction() {
-            reactionActive = false;
-            document.getElementById('target').style.display = 'none';
-            document.getElementById('react-start-screen').style.display = 'flex';
-            const avg = reactionTimes.length ? (reactionTimes.reduce((a,b)=>a+b)/reactionTimes.length).toFixed(0) : 0;
-            alert(`Игра окончена!\nНажатий: ${clicks}\nСреднее время: ${avg} мс`);
-        }
-
-        // --- ЛОГИКА: КРЕСТИКИ ---
-        let board = Array(9).fill(null);
-        let cur = 'X';
-        let scores = {X:0, O:0};
-
-        document.querySelectorAll('.cell').forEach(cell => {
-            cell.onclick = (e) => {
-                const i = e.target.dataset.index;
-                if(board[i] || checkWin()) return;
-                board[i] = cur;
-                e.target.innerText = cur;
-                if(checkWin()) {
-                    scores[cur]++;
-                    document.getElementById('wins-x').innerText = scores.X;
-                    document.getElementById('wins-o').innerText = scores.O;
-                    document.getElementById('ttt-status').innerText = `Победа ${cur}!`;
-                } else {
-                    cur = cur === 'X' ? 'O' : 'X';
-                    document.getElementById('ttt-status').innerText = `Ход: ${cur}`;
-                }
-            }
-        });
-
-        function checkWin() {
-            const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-            return wins.some(w => board[w[0]] && board[w[0]]==board[w[1]] && board[w[0]]==board[w[2]]);
-        }
-
-        function resetTTT() {
-            board.fill(null);
-            document.querySelectorAll('.cell').forEach(c => c.innerText = '');
-            cur = 'X';
-            document.getElementById('ttt-status').innerText = 'Ход: X';
-        }
-
-        // --- ЛОГИКА: ЛАБИРИНТ ---
-        const mazeMap = [
-            [1,1,1,1,1,1,1,1,1,1],
-            [1,0,0,0,1,0,0,0,0,1],
-            [1,0,1,0,1,0,1,1,0,1],
-            [1,0,1,0,0,0,0,1,0,1],
-            [1,0,0,0,1,1,0,0,2,1],
-            [1,1,1,1,1,1,1,1,1,1]
-        ];
-        let p = {x:1, y:1};
-        let mTimer = 0, mInt;
-
-        function initMaze() {
-            const box = document.getElementById('maze-container');
-            box.innerHTML = '';
-            box.style.gridTemplateColumns = `repeat(${mazeMap[0].length}, 30px)`;
-            mazeMap.forEach((row, y) => {
-                row.forEach((cell, x) => {
-                    const d = document.createElement('div');
-                    d.className = `m-cell ${cell==1?'m-wall':cell==2?'m-exit':'m-path'}`;
-                    d.id = `m-${x}-${y}`;
-                    box.appendChild(d);
-                });
-            });
-            p = {x:1, y:1};
-            mTimer = 0; clearInterval(mInt);
-            mInt = setInterval(() => { mTimer++; document.getElementById('maze-timer').innerText = mTimer; }, 1000);
-            drawP();
-        }
-
-        function drawP() {
-            document.querySelectorAll('.m-player').forEach(el=>el.classList.remove('m-player'));
-            document.getElementById(`m-${p.x}-${p.y}`).classList.add('m-player');
-        }
-
-        window.onkeydown = (e) => {
-            if(!document.getElementById('maze').classList.contains('active')) return;
-            let nx = p.x, ny = p.y;
-            if(e.key == 'ArrowUp') ny--;
-            if(e.key == 'ArrowDown') ny++;
-            if(e.key == 'ArrowLeft') nx--;
-            if(e.key == 'ArrowRight') nx++;
-            if(mazeMap[ny][nx] !== 1) {
-                p = {x:nx, y:ny};
-                drawP();
-                if(mazeMap[ny][nx] === 2) {
-                    clearInterval(mInt);
-                    alert(`Победа! Время: ${mTimer} сек.`);
-                    initMaze();
-                }
-            }
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
