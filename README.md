@@ -2,7 +2,8 @@
 ## Разработка интерактивных мини-игр
 ## Демо
 https://github.com/uucycxpuctoc/PRAC3
-<img width="1913" height="920" alt="изображение" src="https://github.com/user-attachments/assets/cafdd3eb-c64c-4bcc-8e70-b2314a4e0b99" />
+<img width="1911" height="913" alt="изображение" src="https://github.com/user-attachments/assets/56a1d96c-5d50-40ac-8395-b50f1c3d6e3e" />
+
 
 ### Реализованные игры:
 1. Игра на скорость реакции  
