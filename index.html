@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AD | PR3 Classic</title>
+    <title>AD | PR3 Interactive</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css?v=99">
 </head>
@@ -15,7 +15,7 @@
                 <button class="dropbtn" id="menuBtn">Мини-игры <span>▼</span></button>
                 <div class="dropdown-content" id="gameMenu">
                     <a href="#" onclick="selectGame('reaction')">⚡ Реакция</a>
-                    <a href="#" onclick="selectGame('tictactoe')">❌ Крестики</a>
+                    <a href="#" onclick="selectGame('tictactoe')">❌ Крестики-нолики</a>
                     <a href="#" onclick="selectGame('maze')">🧩 Лабиринт</a>
                 </div>
             </div>
@@ -40,10 +40,20 @@
         <section id="tictactoe" class="game-card">
             <div class="badge">Задание 2</div>
             <h2>❌ Крестики-нолики</h2>
+            <div class="stats-grid">
+                <div class="stat-card"><span>X</span><strong id="win-x">0</strong></div>
+                <div class="stat-card"><span>O</span><strong id="win-o">0</strong></div>
+            </div>
             <div id="ttt-board" class="ttt-grid">
-                <div class="cell" data-index="0"></div><div class="cell" data-index="1"></div><div class="cell" data-index="2"></div>
-                <div class="cell" data-index="3"></div><div class="cell" data-index="4"></div><div class="cell" data-index="5"></div>
-                <div class="cell" data-index="6"></div><div class="cell" data-index="7"></div><div class="cell" data-index="8"></div>
+                <div class="cell" data-index="0"></div>
+                <div class="cell" data-index="1"></div>
+                <div class="cell" data-index="2"></div>
+                <div class="cell" data-index="3"></div>
+                <div class="cell" data-index="4"></div>
+                <div class="cell" data-index="5"></div>
+                <div class="cell" data-index="6"></div>
+                <div class="cell" data-index="7"></div>
+                <div class="cell" data-index="8"></div>
             </div>
             <p id="ttt-status">Ход: X</p>
             <button class="btn-reset" onclick="resetTTT()">Заново</button>
@@ -52,11 +62,15 @@
         <section id="maze" class="game-card">
             <div class="badge">Задание 3</div>
             <h2>🧩 Лабиринт</h2>
-            <div class="stats-grid"><div class="stat-card"><span>Таймер</span><strong id="maze-timer">0</strong></div></div>
+            <div class="stats-grid">
+                <div class="stat-card"><span>Таймер</span><strong id="maze-timer">0</strong></div>
+            </div>
             <div id="maze-container" class="maze-grid"></div>
+            <p id="maze-msg">Используй стрелки на клавиатуре</p>
             <button class="btn-reset" onclick="initMaze()">Сброс</button>
         </section>
     </main>
+
     <script src="js/script.js"></script>
 </body>
 </html>
